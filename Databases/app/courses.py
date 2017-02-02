@@ -110,9 +110,9 @@ def courses_create_save():
     cnx = get_db()
     cursor = cnx.cursor()
 
-    code =
-    title =
-    description =
+    code = ""
+    title = ""
+    description = ""
 
     error = False
 
