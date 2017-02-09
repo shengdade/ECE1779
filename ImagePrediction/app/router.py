@@ -8,7 +8,7 @@ from classify import classify_image
 # This is the path to the upload directory
 webapp.config['UPLOAD_FOLDER'] = 'app/static/'
 # These are the extension that we are accepting to be uploaded
-webapp.config['ALLOWED_EXTENSIONS'] = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+webapp.config['ALLOWED_EXTENSIONS'] = {'txt', 'pdf', 'png', 'jpg', 'JPG', 'jpeg', 'gif'}
 
 
 # For a given file, return whether it's an allowed type or not
