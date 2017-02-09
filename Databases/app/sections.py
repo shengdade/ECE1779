@@ -34,9 +34,7 @@ def sections_list():
 
     cursor = cnx.cursor()
 
-    query = '''SELECT s.id, c.code, c.title, s.time, s.location, 
-                      s.maximum_enrolment, s.current_enrolment 
-               FROM courses c, sections s 
+    query = '''SELECT s.id, c.code, c.title, s.time, s.location, s.maximum_enrolment, s.current_enrolment FROM courses c, sections s 
                WHERE c.id = s.courses_id'''
 
     cursor.execute(query)
@@ -104,6 +102,32 @@ def sections_create():
 @webapp.route('/sections/create', methods=['POST'])
 # Create a new student and save them in the database.
 def sections_create_save():
+    course_id = request.form.get('course_id', "")
+    time = request.form.get('time', "")
+    location = request.form.get('location', "")
+    maximum_enrolment = request.form.get('maximum_enrolment', "")
+    current_enrolment = request.form.get('current_enrolment', "")
+
+    cnx = get_db()
+    cursor = cnx.cursor()
+
+    if course_id == "" or time == "" or location == "" or \
+                    maximum_enrolment == "" or current_enrolment == "":
+        error_msg = "Error: All fields are required!"
+        query = 'SELECT id, code, title FROM courses'
+        cursor.execute(query)
+        return render_template("sections/new.html", title="New Section",
+                               cursor=cursor,
+                               error_msg=error_msg,
+                               course_id=course_id, time=time, location=location,
+                               maximum_enrolment=maximum_enrolment)
+
+    query = ''' INSERT INTO sections (courses_id,time,location,maximum_enrolment,current_enrolment)
+                       VALUES (%s,%s,%s,%s,%s)'''
+
+    cursor.execute(query, (course_id, time, location, maximum_enrolment, current_enrolment))
+    cnx.commit()
+
     return redirect(url_for('sections_list'))
 
 

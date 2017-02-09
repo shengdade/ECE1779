@@ -44,7 +44,23 @@ def courses_list():
 @webapp.route('/courses/<int:id>', methods=['GET'])
 # Display details about a specific student.
 def courses_view(id):
-    return render_template("courses/view.html", title="Course Details", )
+    cnx = get_db()
+
+    cursor = cnx.cursor()
+
+    query = "SELECT * FROM courses WHERE id = %s"
+
+    cursor.execute(query, (id,))
+
+    row = cursor.fetchone()
+
+    id = row[0]
+    code = row[1]
+    title = row[2]
+    description = row[3]
+
+    return render_template("courses/view.html", title="Course Details", id=id, code=code, ctitle=title,
+                           description=description)
 
 
 @webapp.route('/courses/edit/<int:id>', methods=['GET'])
@@ -107,12 +123,9 @@ def courses_create():
 @webapp.route('/courses/create', methods=['POST'])
 # Create a new student and save them in the database.
 def courses_create_save():
-    cnx = get_db()
-    cursor = cnx.cursor()
-
-    code = ""
-    title = ""
-    description = ""
+    code = request.form.get('code', "")
+    title = request.form.get('title', "")
+    description = request.form.get('description', "")
 
     error = False
 
@@ -121,18 +134,17 @@ def courses_create_save():
         error_msg = "Error: All fields are required!"
 
     if error:
-        return render_template("courses/new.html",
-                               title="New Course",
-                               error_msg=error_msg,
-                               code=code,
-                               ctitle=title,
+        return render_template("courses/new.html", title="New Course", error_msg=error_msg, code=code, ctitle=title,
                                description=description)
 
-    query = ''' INSERT INTO
-            
-            '''
+    cnx = get_db()
+    cursor = cnx.cursor()
 
-    cursor.execute(query, (               ))
+    query = ''' INSERT INTO courses (code,title,description)
+                       VALUES (%s,%s,%s)
+    '''
+
+    cursor.execute(query, (code, title, description))
     cnx.commit()
 
     return redirect(url_for('courses_list'))

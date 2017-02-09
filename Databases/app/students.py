@@ -47,8 +47,11 @@ def students_list():
 # Display details about a specific student.
 def students_view(id):
     cnx = get_db()
+
     cursor = cnx.cursor()
+
     query = "SELECT * FROM students WHERE id = %s"
+
     cursor.execute(query, (id,))
 
     row = cursor.fetchone()
@@ -69,7 +72,10 @@ def students_view(id):
 
     cursor.execute(query, (id,))
 
-    for row in cursor: registered.append(row)
+    for row in cursor:
+        registered.append(row)
+
+    # s.current_enrolment < s.maximum_enrolment AND
 
     query = '''SELECT s.id, c.code, c.title, s.time 
                FROM courses c, sections s
@@ -82,7 +88,8 @@ def students_view(id):
 
     available = []
 
-    for row in cursor: available.append(row)
+    for row in cursor:
+        available.append(row)
 
     return render_template("students/view.html", title="Student Details",
                            registered=registered,
@@ -208,5 +215,25 @@ def students_delete(id):
 def students_register(students_id, sections_id):
     cnx = get_db()
     cursor = cnx.cursor()
+
+    query = "SELECT maximum_enrolment, current_enrolment FROM sections where id = %s"
+    cursor.execute(query, (sections_id,))
+
+    row = cursor.fetchone()
+
+    maximum_enrolment = int(row[0])
+    current_enrolment = int(row[1])
+
+    if (current_enrolment < maximum_enrolment):
+        current_enrolment += 1
+
+        query = "UPDATE sections SET current_enrolment = %s WHERE id = %s"
+        cursor.execute(query, (current_enrolment, sections_id))
+
+        query = "INSERT INTO students_has_sections (students_id,sections_id) VALUES (%s, %s)"
+        cursor.execute(query, (students_id, sections_id))
+        cnx.commit()
+    else:
+        cnx.rollback()
 
     return redirect(url_for('students_view', id=students_id))
