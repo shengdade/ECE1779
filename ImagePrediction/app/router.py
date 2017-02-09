@@ -1,6 +1,6 @@
 import os
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request
 
 from app import webapp
 from classify import classify_image
@@ -37,19 +37,8 @@ def upload():
         filename = user_file.filename
         # Move the user_file form the temporal folder to
         # the upload folder we setup
-        user_file.save(os.path.join(webapp.config['UPLOAD_FOLDER'], filename))
-        # Redirect the user to the uploaded_file route, which
-        # will basically show on the browser the uploaded user_file
-        return redirect(url_for('classify', filename=filename))
-
-
-# This route is expecting a parameter containing the name
-# of a file. Then it will locate that file on the upload
-# directory and show it on the browser, so if the user uploads
-# an image, that image is going to be show after the upload
-@webapp.route('/uploads/<filename>', methods=['GET'])
-def classify(filename):
-    file_path = os.path.join(webapp.config['UPLOAD_FOLDER'], filename)
-    prediction_list = classify_image(file_path)
-    print prediction_list
-    return render_template('classify.html', prediction=prediction_list, filename=filename)
+        file_path = os.path.join(webapp.config['UPLOAD_FOLDER'], filename)
+        user_file.save(file_path)
+        prediction_list = classify_image(file_path)
+        print prediction_list
+        return render_template('classify.html', prediction=prediction_list, filename=filename)
