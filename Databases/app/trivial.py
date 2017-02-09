@@ -7,8 +7,8 @@ import mysql.connector
 @webapp.route('/trivial', methods=['GET'])
 # Display an HTML list of all courses.
 def trivial():
-    cnx = mysql.connector.connect(user='ece1779',
-                                  password='secret',
+    cnx = mysql.connector.connect(user='root',
+                                  password='password',
                                   host='127.0.0.1',
                                   database='ece1779')
 
