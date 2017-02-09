@@ -42,3 +42,5 @@ def upload():
         prediction_list = classify_image(file_path)
         print prediction_list
         return render_template('classify.html', prediction=prediction_list, filename=filename)
+    else:
+        return render_template('index.html')
