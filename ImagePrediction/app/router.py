@@ -1,6 +1,6 @@
 import os
 
-from flask import render_template, request
+from flask import render_template, request, url_for
 
 from app import webapp
 from classify import classify_image
@@ -23,7 +23,8 @@ def allowed_file(filename):
 @webapp.route('/index', methods=['GET'])
 @webapp.route('/main', methods=['GET'])
 def index():
-    return render_template('index.html')
+    imgURL = url_for('static', filename='loading.gif')
+    return render_template('index.html', imgURL=imgURL)
 
 
 # Route that will process the file upload
