@@ -13,11 +13,6 @@ def s3_list():
     # Print out bucket names
     buckets = s3.buckets.all()
 
-    for b in buckets:
-        name = b.name
-
-    buckets = s3.buckets.all()
-
     return render_template("s3_examples/list.html", title="s3 Instances", buckets=buckets)
 
 
@@ -28,8 +23,8 @@ def s3_view(id):
 
     bucket = s3.Bucket(id)
 
-    for key in bucket.objects.all():
-        k = key
+    # for key in bucket.objects.all():
+    #     k = key
 
     keys = bucket.objects.all()
 

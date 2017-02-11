@@ -33,7 +33,7 @@ def ec2_view(id):
 
     metric_name = 'CPUUtilization'
 
-    ##    CPUUtilization, NetworkIn, NetworkOut, NetworkPacketsIn,
+    #    CPUUtilization, NetworkIn, NetworkOut, NetworkPacketsIn,
     #    NetworkPacketsOut, DiskWriteBytes, DiskReadBytes, DiskWriteOps,
     #    DiskReadOps, CPUCreditBalance, CPUCreditUsage, StatusCheckFailed,
     #    StatusCheckFailed_Instance, StatusCheckFailed_System
@@ -116,7 +116,7 @@ def ec2_view(id):
 def ec2_create():
     ec2 = boto3.resource('ec2')
 
-    ec2.create_instances(ImageId=config.ami_id, MinCount=1, MaxCount=1)
+    ec2.create_instances(ImageId=config.ami_id, InstanceType=config.instance_type, MinCount=1, MaxCount=1)
 
     return redirect(url_for('ec2_list'))
 
