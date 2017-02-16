@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <ul>
+        <li><a href="{{ url_for('static', filename='factorial.html') }}">JavaScript Factorial</a></li>
+        <li><a href="{{ url_for('static', filename='factorial_jquery.html') }}">jQuery Factorial</a></li>
+        <li><a href="{{ url_for('static', filename='timer.html') }}">Clock</a></li>
+        <li><a href="{{ url_for('static', filename='movie_quotes.html') }}">Movie Quotes</a></li>
+        <li><a href="{{ url_for('static', filename='movie_quotes_list.html') }}">Movie Quotes List</a></li>
+
+    </ul>
+
+{% endblock %}
