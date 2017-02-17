@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <script src="jquery-3.1.1.js"></script>
     <script>
 
+        function factorial() {
+            var x = $("#number").val();
+            var res = "<h1>Table of Factorials</h1>";
+            for (i = 1, fact = 1; i <= x; i++, fact *= i) {
+                res += i + "! = " + fact + "<br>";
+            }
+            $("#result").html(res);
+            return 0;
+        }
+
+        //$(document).ready(function (){
+
+        $(function () {
+            $("input[type='button']").click(factorial);
+        });
 
     </script>
+
+
 </head>
+
 <body style="font: bolder 28">
 <form>
     Factorial of <input type="text" id="number" size="3">
     <input type="button" value="Factorial!"/>
 </form>
-<span id="result"/>
-</body>
-</html>
 
+<span id="result"/>
+
+</body>
+
+</html>

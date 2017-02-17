@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <script>
         function factorial() {
-
-
+            var x = document.getElementById("number").value;
+            var res = "<h1>Table of Factorials</h1>";
+            for (i = 1, fact = 1; i <= x; i++, fact *= i) {
+                res += i + "! = " + fact + "<br>";
+            }
+            document.getElementById("result").innerHTML = res;
+            return 0;
         }
     </script>
+
+
 </head>
+
 <body style="font: bolder 28">
 <form>
     Factorial of <input type="text" id="number" size="3">
     <input type="button" onclick="factorial()" value="Factorial!"/>
 </form>
+
 <span id="result"/>
+
 </body>
+
 </html>
-
-

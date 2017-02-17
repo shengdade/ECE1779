@@ -4,15 +4,34 @@
     <title>Timers</title>
     <script src="jquery-3.1.1.js"></script>
     <script src="jquery.timer.js"></script>
+
     <script>
+        $(function () {
+            var timeout = 1000;
+            var timer;
 
+            $("#console").html(new Date());
 
+            function updateTimer() {
+                $("#console").html(new Date());
+            }
+
+            var timer = $.timer(timeout, updateTimer);
+
+            $("input[name=start]").click(function () {
+                timer.reset(timeout);
+            });
+            $("input[name=stop]").click(function () {
+                timer.stop();
+            });
+
+        });
     </script>
 </head>
+
 <body>
 <h3>jQuery Timer Example</h3>
 <div id="console"></div>
 <input type="button" name="start" value="Start"/>
 <input type="button" name="stop" value="Stop"/>
 </body>
-</html>
