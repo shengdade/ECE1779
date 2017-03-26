@@ -1,7 +1,7 @@
 {
     "dev": {
         "app_function": "run.webapp", 
-        "s3_bucket": "ece1779winter2017demo"
+        "s3_bucket": "zappa-xxnnetb6p"
         "parameter_depth" : 1
     }
 }
