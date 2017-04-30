@@ -1,0 +1,12 @@
+{
+  "ActionOnFailure": "CANCEL_AND_WAIT",
+  "Name": "Example Jar Step",
+  "HadoopJarStep": {
+    "MainClass": "WordCountDriver",
+    "Jar": "s3n://uoftece1779winter2012/hadoop/lib/ece1779hadoop.jar",
+    "Args": [
+      "s3n://uoftece1779winter2012/hadoop/input/ncdc/all",
+      "s3n://uoftece1779winter2012/hadoop/output"
+    ]
+  }
+}

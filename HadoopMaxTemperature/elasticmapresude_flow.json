@@ -1,0 +1,12 @@
+{
+	"ActionOnFailure": "CANCEL_AND_WAIT",
+    "Name": "Example Jar Step",
+    "HadoopJarStep": {
+      "MainClass": "MaxTemperatureDriver",
+      "Jar": "s3n://ece1779winter2013/ece1779hadoop.jar",
+      "Args": [
+        "s3n://ece1779winter2013/input/ncdc/all",
+        "s3n://ece1779winter2013/output"
+      ]
+    }
+}
